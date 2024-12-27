@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema name="Multidimensional2">
+  <!-- Sales Cube -->
+  <Cube name="Sales" defaultMeasure="Sales Amount">
+
+    <!-- Faktorial Tabel -->
+    <Table name="factpurchaseorder"/>
+
+    <!-- Store Dimension -->
+    <Dimension name="Location" foreignKey="LocationID">
+      <Hierarchy hasAll="true" allMemberName="All Locations" primaryKey="LocationID">
+        <Table name="dimlocation"/>
+        <Level name="Location" column="LocationName" uniqueMembers="true"/>
+        <Level name="Cost Rate" column="CostRate" uniqueMembers="false"/>
+        <Level name="Availability" column="Availability" uniqueMembers="false"/>
+      </Hierarchy>
+    </Dimension>
+
+    <!-- Product Dimension -->
+    <Dimension name="Category" foreignKey="CategoryID">
+      <Hierarchy hasAll="true" allMemberName="All Categories" primaryKey="CategoryID">
+        <Table name="dimproductcategory"/>
+        <Level name="Category Name" column="CategoryName" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+
+    <!-- Vendor Dimension -->
+    <Dimension name="Vendor" foreignKey="VendorID">
+      <Hierarchy hasAll="true" allMemberName="All Vendor" primaryKey="VendorID">
+        <Table name="dimvendor"/>
+        <Level name="Vendor Name" column="VendorName" uniqueMembers="true"/>
+        <Level name="Credit Rating" column="CreditRating" uniqueMembers="false"/>
+        <Level name="Preferred Vendor Status" column="PreferredVendorStatus" uniqueMembers="false"/>
+        <Level name="Active Flag" column="ActiveFlag" uniqueMembers="false"/>
+      </Hierarchy>
+    </Dimension>
+
+    <!-- Measures -->
+    <Measure name="Unit Price" column="UnitPrice" aggregator="sum" formatString="Standard"/>
+    <Measure name="Line Total" column="LineTotal" aggregator="sum" formatString="Standard"/>
+    <Measure name="Order Quantity" column="OrderQty" aggregator="count" formatString="#,##0"/>
+
+  </Cube>
+</Schema>
